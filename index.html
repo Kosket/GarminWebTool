@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Garmin Web Tool</title>
+    <base href="/GarminWebTool/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="GarminWebTool.styles.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="app">
+        <div style="text-align:center; margin-top:30vh;">
+            <h1>Cargando herramienta Garmin...</h1>
+        </div>
+    </div>
+    <div id="blazor-error-ui">Error.<a href="" class="reload">Recargar</a><a class="dismiss">🗙</a></div>
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+    <script>
+        Blazor.start({ loadBootResource: function (type, name, defaultUri, integrity) { return defaultUri; } });
+        window.downloadFileFromStream = async (fileName, contentStreamReference) => {
+            const arrayBuffer = await contentStreamReference.arrayBuffer();
+            const blob = new Blob([arrayBuffer]);
+            const url = URL.createObjectURL(blob);
+            const anchorElement = document.createElement('a');
+            anchorElement.href = url;
+            anchorElement.download = fileName ?? '';
+            anchorElement.click();
+            anchorElement.remove();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
